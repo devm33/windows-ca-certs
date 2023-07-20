@@ -1,0 +1,25 @@
+{
+  "name": "windows-ca-certs",
+  "version": "0.0.1",
+  "description": "Wraps @vscode/windows-ca-certs with prebuilt binary",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devm33/windows-ca-certs.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/devm33/windows-ca-certs/issues"
+  },
+  "homepage": "https://github.com/devm33/windows-ca-certs#readme",
+  "optionalDependencies": {
+    "@vscode/windows-ca-certs": "^0.3.1"
+  },
+  "dependencies": {
+    "node-forge": "^1.3.1"
+  },
+  "license": "BSD"
+}
