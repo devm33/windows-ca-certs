@@ -1,6 +1,12 @@
 function all() {
-  const crypt = require("./crypt32.node");
   const {X509Certificate} = require('crypto');
+  const {join} = require('path');
+  // https://github.com/webpack/webpack/issues/4175#issuecomment-342931035
+  var requireFunc =
+    typeof __webpack_require__ === 'function'
+    ? __non_webpack_require__
+    : require;
+  const crypt = requireFunc(join(__dirname, "crypt32.node"));
   const pems = [];
   const store = new crypt.Crypt32();
   try {
