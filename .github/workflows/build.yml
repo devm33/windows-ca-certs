@@ -21,6 +21,9 @@ jobs:
           name: crypt32.zip
           path: node_modules/@vscode/windows-ca-certs/build/Release/crypt32.node
       - run: cp node_modules/@vscode/windows-ca-certs/build/Release/crypt32.node .
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm test
+      - name: Publish to NPM if version changed and on main
+        if: github.ref == 'refs/heads/main'
+        uses: JS-DevTools/npm-publish@v2
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
