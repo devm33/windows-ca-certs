@@ -3,6 +3,7 @@
   "version": "0.0.3",
   "description": "Wraps @vscode/windows-ca-certs with prebuilt binary",
   "main": "index.js",
+  "bin": "./list.js",
   "scripts": {
     "test": "node test.js"
   },
