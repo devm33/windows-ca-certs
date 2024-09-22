@@ -1,6 +1,6 @@
 {
   "name": "windows-ca-certs",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Wraps @vscode/windows-ca-certs with prebuilt binary",
   "main": "index.js",
   "bin": "./list.js",
