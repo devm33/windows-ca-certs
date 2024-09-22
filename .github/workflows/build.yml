@@ -22,8 +22,14 @@ jobs:
           path: node_modules/@vscode/windows-ca-certs/build/Release/crypt32.node
       - run: cp node_modules/@vscode/windows-ca-certs/build/Release/crypt32.node .
       - run: npm test
-      - name: Publish to NPM if version changed and on main
+      - name: Publish to NPM on main and release commit
         if: github.ref == 'refs/heads/main'
-        uses: JS-DevTools/npm-publish@v3
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [[ "${{ github.event.head_commit.message }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+            npm publish
+          else
+            echo "Not a release"
+          fi
+        shell: bash
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
