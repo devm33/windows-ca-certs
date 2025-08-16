@@ -41,6 +41,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           merge-multiple: true
+      - run: ls
       - name: Publish to NPM on main and release commit
         if: github.ref == 'refs/heads/main'
         run: |
