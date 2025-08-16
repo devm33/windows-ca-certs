@@ -6,22 +6,43 @@ on:
   pull_request:
 
 jobs:
-  build-addon:
+  build-win32-x64:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: dir -recurse
+      - run: cp node_modules/@vscode/windows-ca-certs/build/Release/crypt32.node .
+      - run: npm test
       - uses: actions/upload-artifact@v4
         with:
           name: crypt32.zip
-          path: node_modules/@vscode/windows-ca-certs/build/Release/crypt32.node
-      - run: cp node_modules/@vscode/windows-ca-certs/build/Release/crypt32.node .
+          path: crypt32.node
+
+  build-win32-arm64:
+    runs-on: windows-11-arm
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - run: npm ci
+      - run: dir -recurse
+      - run: cp node_modules/@vscode/windows-ca-certs/build/Release/crypt32.node ./crypt32-arm64.node
       - run: npm test
+      - uses: actions/upload-artifact@v4
+        with:
+          name: crypt32-arm64.zip
+          path: crypt32-arm64.node
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: [build-win32-x64, build-win32-arm64]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
       - name: Publish to NPM on main and release commit
         if: github.ref == 'refs/heads/main'
         run: |
