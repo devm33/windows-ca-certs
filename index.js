@@ -6,7 +6,8 @@ function all() {
     typeof __webpack_require__ === 'function'
     ? __non_webpack_require__
     : require;
-  const crypt = requireFunc(join(__dirname, "crypt32.node"));
+  const addon = process.arch === 'arm64' ? "crypt32-arm64.node" : "crypt32.node";
+  const crypt = requireFunc(join(__dirname, addon));
   const pems = [];
   const store = new crypt.Crypt32();
   try {
